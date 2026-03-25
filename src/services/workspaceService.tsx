@@ -1,5 +1,5 @@
 import { ENVIRONTMENT } from "../../config/environment.config";
-import { LOCAL_STORAGE_TOKEN } from "../contexts/Auth/AuthProvider";
+import { LOCAL_STORAGE_TOKEN } from "../constants";
 
 export const getWorkspaces = async () => {
   const token = localStorage.getItem(LOCAL_STORAGE_TOKEN);
