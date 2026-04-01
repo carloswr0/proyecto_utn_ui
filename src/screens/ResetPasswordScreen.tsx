@@ -1,16 +1,18 @@
-import { useSearchParams } from "react-router";
+import { useNavigate, useSearchParams } from "react-router";
 import useForm from "../hooks/useForm";
 import useRequest from "../hooks/useRequest";
 import { resetPassword } from "../services/authService";
+import { useEffect, useState } from "react";
 
 const ResetPasswordScreen = () => {
   const [searchParams] = useSearchParams();
   const resetPasswordToken = searchParams.get("reset_password_token");
   const { sendRequest, error, loading, response } = useRequest();
-
+  const navigate = useNavigate();
   const RESET_PASSWORD_FORM_FIELDS = {
     PASSWORD: "password",
   };
+  const [redirectCountdown, setRedirectCountdown] = useState(0);
 
   const initialFormState = {
     [RESET_PASSWORD_FORM_FIELDS.PASSWORD]: "",
@@ -33,6 +35,27 @@ const ResetPasswordScreen = () => {
     initialFormState,
     submitFn: onResetPassword,
   });
+
+  useEffect(() => {
+    if (!response) return;
+
+    setTimeout(() => {
+      setRedirectCountdown(3);
+    }, 0);
+
+    const timer = setInterval(() => {
+      setRedirectCountdown((prev) => prev - 1);
+    }, 1000);
+
+    const redirectTimer = setTimeout(() => {
+      navigate("/login");
+    }, 3000);
+
+    return () => {
+      clearInterval(timer);
+      clearTimeout(redirectTimer);
+    };
+  }, [response, navigate]);
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100 px-4">
@@ -82,9 +105,20 @@ const ResetPasswordScreen = () => {
 
           {response && (
             <p className="text-sm text-green-500 text-center">
-              {response.message}
+              {response.message} Redirecting in {redirectCountdown || 0}{" "}
+              seconds...
             </p>
           )}
+
+          <div className="text-center">
+            <button
+              type="button"
+              className="text-sm text-blue-500 hover:text-blue-700 cursor-pointer underline"
+              onClick={() => navigate("/login")}
+            >
+              Regresar a iniciar sesión
+            </button>
+          </div>
         </form>
       </div>
     </div>

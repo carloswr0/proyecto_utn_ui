@@ -6,7 +6,7 @@ import VerifyEmailScreen from "./screens/VerifyEmailScreen.tsx";
 import ResetPasswordScreen from "./screens/ResetPasswordScreen.tsx";
 import HomeScreen from "./screens/HomeScreen.tsx";
 import AuthMiddleware from "./middlewares/AuthMiddleware.tsx";
-
+import NewWorkspaceScreen from "./screens/NewWorkspaceScreen.tsx";
 const App = () => {
   return (
     <Routes>
@@ -21,6 +21,7 @@ const App = () => {
       <Route path="/reset-password" element={<ResetPasswordScreen />} />
       <Route element={<AuthMiddleware />}>
         <Route path="/home" element={<HomeScreen />} />
+        <Route path="/workspace/new" element={<NewWorkspaceScreen />} />
       </Route>
     </Routes>
   );

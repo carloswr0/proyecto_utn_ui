@@ -1,10 +1,11 @@
+import { useNavigate } from "react-router";
 import useForm from "../hooks/useForm";
 import useRequest from "../hooks/useRequest";
 import { requestResetPassword } from "../services/authService";
 
 const ResetPasswordScreen = () => {
   const { sendRequest, error, loading, response } = useRequest();
-
+  const navigate = useNavigate();
   const LOGIN_FORM_FIELDS = {
     EMAIL: "email",
   };
@@ -76,6 +77,16 @@ const ResetPasswordScreen = () => {
               {response.message}
             </span>
           )}
+
+          <div className="text-center">
+            <button
+              type="button"
+              className="text-sm text-blue-500 hover:text-blue-700 cursor-pointer underline"
+              onClick={() => navigate("/login")}
+            >
+              Regresar a iniciar sesión
+            </button>
+          </div>
         </form>
       </div>
     </div>
