@@ -24,7 +24,6 @@ vite.config.ts.timestamp-*
 !.env.example
 
 # Editor directories and files
-.vscode/
 .idea/
 .DS_Store
 *.suo
